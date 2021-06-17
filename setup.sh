@@ -1,6 +1,3 @@
-echo "Installing oh-my-zsh ..."
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 echo "Installing brew ..."
 brew > brew_check 2>&1
 check=$(cat brew_check |  wc -l | tr -d " ")
@@ -14,12 +11,3 @@ then
 	brew help
 fi
 rm brew_check
-
-echo "Installing Docker"
-brew install Docker
-
-echo "Installing Minikube"
-brew install minikube
-export MINIKUBE_HOME=/goinfre/$(whoami)
-minikube start
-eval $(minikube -p minikube docker-env)
