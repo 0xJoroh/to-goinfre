@@ -11,3 +11,6 @@ then
 	brew help
 fi
 rm brew_check
+
+echo "Installing yarn with its dependencies... (node, nghttp2, openssl, jemalloc, libev, ...)"
+brew install yarn
