@@ -16,8 +16,8 @@ echo "Installing yarn with its dependencies... (node, nghttp2, openssl, jemalloc
 brew install yarn
 
 echo "clone Reop"
-cd ~/goinfre/
+cd /goinfre/$(whoami)
 git clone https://github.com/ayour-labs/modern-stream.git
 
-echo "Install project dependencies"
-cd ./modern-stream && yarn install && yarn start
+echo "Run Modern Stream Project"
+cd /goinfre/$(whoami)/modern-stream && yarn install && yarn start && code .
