@@ -14,3 +14,10 @@ rm brew_check
 
 echo "Installing yarn with its dependencies... (node, nghttp2, openssl, jemalloc, libev, ...)"
 brew install yarn
+
+echo "clone Reop"
+cd ~/goinfre/
+git clone https://github.com/ayour-labs/modern-stream.git
+
+echo "Install project dependencies"
+cd ./modern-stream && yarn install && yarn start
