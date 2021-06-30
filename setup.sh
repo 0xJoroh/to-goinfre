@@ -20,4 +20,4 @@ cd /goinfre/$(whoami)
 git clone https://github.com/ayour-labs/modern-stream.git
 
 echo "Run Modern Stream Project"
-cd /goinfre/$(whoami)/modern-stream && yarn install && code . && yarn start
+cd /goinfre/$(whoami)/modern-stream && code . && yarn install && yarn start
