@@ -15,7 +15,7 @@ then
 fi
 rm brew_check
 
-echo "alias code='/goinfre/mait-si-/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'" >> ~/.zshrc
+echo "alias code='/goinfre/$(whoami)/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'" >> ~/.zshrc
 echo "function push(){git add . && git commit -m "$1" && git push}" >> ~/.zshrc
 echo "\n\e[92mInstalling yarn with its dependencies... (node, nghttp2, openssl, jemalloc, libev, ...)\e[39m"
 brew install yarn
