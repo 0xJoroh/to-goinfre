@@ -71,5 +71,9 @@ installBrew
 echo "\n\nCreate aliases"
 createAliases
 
-echo "\n\nInstalling Node"
-brew install node
+# Install Node
+node --version | grep "v" &> /dev/null
+if [ $? == 1 ]; then
+ echo "\n\nInstalling Node"
+ brew install node
+fi
