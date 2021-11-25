@@ -1,27 +1,75 @@
-echo "\n\e[92mInstalling ZSH ...\e[39m"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#!/bin/bash
+function removeApps()
+{
+	rm -rf "/Users/$(whoami)/.vscode"
+	rm -rf "/Users/$(whoami)/Library/Caches"
+	rm -rf "/Users/$(whoami)/Library/Application\ Support/Code"
+	rm -rf "/Users/$(whoami)/Library/Application\ Support/Google"
+}
 
-echo "\n\e[92mInstalling brew ...\e[39m"
-brew > brew_check 2>&1
-check=$(cat brew_check |  wc -l | tr -d " ")
-if [ $check -lt 5 ]
-then
-	path_to="/goinfre/$(whoami)/"
-	echo 'export path_to="/goinfre/$(whoami)/"' >> $HOME/.zshrc
-	git clone https://github.com/Homebrew/brew $path_to/.brew
-	echo 'export PATH=$path_to/.brew/bin:$PATH' >> $HOME/.zshrc
-	source $HOME/.zshrc
-	brew help
-fi
-rm brew_check
+function openApps()
+{
+	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk && killall Google\ Chrome
+	VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" && killall Electron
+}
 
-echo "alias code='/goinfre/$(whoami)/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'" >> ~/.zshrc
-echo "function push(){git add . && git commit -m "$1" && git push}" >> ~/.zshrc
-echo "\n\e[92mInstalling yarn with its dependencies... (node, nghttp2, openssl, jemalloc, libev, ...)\e[39m"
-brew install yarn
+function moveApps()
+{
+	[ -d "/goinfre/$(whoami)/ln/.vscode" ] && mv "/Users/$(whoami)/.vscode ~/goinfre/ln/"
+	[ -d "/goinfre/$(whoami)/ln/Caches" ] && mv "/Users/$(whoami)/Library/Caches ~/goinfre/ln/"
+	[ -d "/goinfre/$(whoami)/ln/Code" ] && mv "/Users/$(whoami)/Library/Application\ Support/Code ~/goinfre/ln/"
+	[ -d "/goinfre/$(whoami)/ln/Google" ] && mv "/Users/$(whoami)/Library/Application\ Support/Google ~/goinfre/ln/"
+}
 
-echo "\n\e[92mCloning Moder Stream...\e[39m"
-git clone https://github.com/ayour-labs/modern-stream.git /goinfre/$(whoami)/modern-stream
+function linkApps()
+{
+	ln -s "~/goinfre/ln/.vscode" "/Users/$(whoami)/.vscode"
+	ln -s "~/goinfre/ln/Caches" "/Users/$(whoami)/Library/Caches"
+	ln -s "~/goinfre/ln/Code" "/Users/$(whoami)/Library/Application\ Support/Code"
+	ln -s "~/goinfre/ln/Google" "/Users/$(whoami)/Library/Application\ Support/Google"
+}
 
-echo "\n\e[92mRun Modern Stream Project\e[39m"
-cd /goinfre/$(whoami)/modern-stream && code . && yarn install && yarn start
+function installBrew()
+{
+	brew > brew_check 2>&1
+	check=$(cat brew_check |  wc -l | tr -d " ")
+	if [ $check -lt 5 ]
+	then
+		path_to="/goinfre/$(whoami)/"
+		echo 'export path_to="/goinfre/$(whoami)/"' >> $HOME/.zshrc
+		git clone https://github.com/Homebrew/brew $path_to/.brew
+		echo 'export PATH=$path_to/.brew/bin:$PATH' >> $HOME/.zshrc
+		source $HOME/.zshrc
+		brew help
+	fi
+	rm brew_check
+}
+
+function createAliases()
+{
+	# push commites using (push "message") command
+	echo "function push(){git add . && git commit -m "$1" && git push}" >> ~/.zshrc
+	# open vs Code using (code) command
+	echo "code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}" >> ~/.zshrc
+}
+
+
+[ ! -d "/bin/zsh" ] && echo "\n\nInstalling ZSH ..." && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "\n\nRemoving applications"
+removeApps
+
+echo "\n\nRestart applications"
+openApps
+
+echo "\n\nMoving applications to goinfre"
+moveApps
+
+echo "\n\nInstall Homebrew"
+installBrew
+
+echo "\n\nCreate aliases"
+createAliases
+
+echo "\n\nInstalling Node"
+brew install node
