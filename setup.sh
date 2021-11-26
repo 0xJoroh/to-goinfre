@@ -1,10 +1,10 @@
 #!/bin/bash
 function removeApps()
 {
-	rm -rf /Users/$(whoami)/.vscode
-	rm -rf /Users/$(whoami)/Library/Caches
-	rm -rf /Users/$(whoami)/Library/Application\ Support/Code
-	rm -rf /Users/$(whoami)/Library/Application\ Support/Google
+	[ -L "/goinfre/$(whoami)/ln/.vscode" ] && rm -rf /Users/$(whoami)/.vscode
+	[ -L "/goinfre/$(whoami)/ln/Caches" ] && rm -rf /Users/$(whoami)/Library/Caches
+	[ -L "/goinfre/$(whoami)/ln/Code" ] && rm -rf /Users/$(whoami)/Library/Application\ Support/Code
+	[ -L "/goinfre/$(whoami)/ln/Google" ] && rm -rf /Users/$(whoami)/Library/Application\ Support/Google
 }
 
 function openApps()
@@ -19,18 +19,18 @@ function openApps()
 
 function moveApps()
 {
-	[ -d "/goinfre/$(whoami)/ln/.vscode" ] && mv /Users/$(whoami)/.vscode ~/goinfre/ln/
-	[ -d "/goinfre/$(whoami)/ln/Caches" ] && mv /Users/$(whoami)/Library/Caches ~/goinfre/ln/
-	[ -d "/goinfre/$(whoami)/ln/Code" ] && mv /Users/$(whoami)/Library/Application\ Support/Code ~/goinfre/ln/
-	[ -d "/goinfre/$(whoami)/ln/Google" ] && mv /Users/$(whoami)/Library/Application\ Support/Google ~/goinfre/ln/
+	[ -d "/goinfre/$(whoami)/ln/.vscode" ] && mv /Users/$(whoami)/.vscode /goinfre/$(whoami)/ln/
+	[ -d "/goinfre/$(whoami)/ln/Caches" ] && mv /Users/$(whoami)/Library/Caches /goinfre/$(whoami)/ln/
+	[ -d "/goinfre/$(whoami)/ln/Code" ] && mv /Users/$(whoami)/Library/Application\ Support/Code /goinfre/$(whoami)/ln/
+	[ -d "/goinfre/$(whoami)/ln/Google" ] && mv /Users/$(whoami)/Library/Application\ Support/Google /goinfre/$(whoami)/ln/
 }
 
 function linkApps()
 {
-	ln -s ~/goinfre/ln/.vscode /Users/$(whoami)/.vscode
-	ln -s ~/goinfre/ln/Caches /Users/$(whoami)/Library/Caches
-	ln -s ~/goinfre/ln/Code /Users/$(whoami)/Library/Application\ Support/Code
-	ln -s ~/goinfre/ln/Google /Users/$(whoami)/Library/Application\ Support/Google
+	ln -s /goinfre/$(whoami)/ln/.vscode /Users/$(whoami)/.vscode
+	ln -s /goinfre/$(whoami)/ln/Caches /Users/$(whoami)/Library/Caches
+	ln -s /goinfre/$(whoami)/ln/Code /Users/$(whoami)/Library/Application\ Support/Code
+	ln -s /goinfre/$(whoami)/ln/Google /Users/$(whoami)/Library/Application\ Support/Google
 }
 
 function installBrew()
