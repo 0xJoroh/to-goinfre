@@ -1,32 +1,36 @@
 #!/bin/bash
 function removeApps()
 {
-	rm -rf "/Users/$(whoami)/.vscode"
-	rm -rf "/Users/$(whoami)/Library/Caches"
-	rm -rf "/Users/$(whoami)/Library/Application\ Support/Code"
-	rm -rf "/Users/$(whoami)/Library/Application\ Support/Google"
+	rm -rf /Users/$(whoami)/.vscode
+	rm -rf /Users/$(whoami)/Library/Caches
+	rm -rf /Users/$(whoami)/Library/Application\ Support/Code
+	rm -rf /Users/$(whoami)/Library/Application\ Support/Google
 }
 
 function openApps()
 {
-	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk && killall Google\ Chrome
-	VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" && killall Electron
+	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk
+	sleep 3
+	killall Google\ Chrome
+	VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode"
+	sleep 3
+	killall Electron
 }
 
 function moveApps()
 {
-	[ -d "/goinfre/$(whoami)/ln/.vscode" ] && mv "/Users/$(whoami)/.vscode ~/goinfre/ln/"
-	[ -d "/goinfre/$(whoami)/ln/Caches" ] && mv "/Users/$(whoami)/Library/Caches ~/goinfre/ln/"
-	[ -d "/goinfre/$(whoami)/ln/Code" ] && mv "/Users/$(whoami)/Library/Application\ Support/Code ~/goinfre/ln/"
-	[ -d "/goinfre/$(whoami)/ln/Google" ] && mv "/Users/$(whoami)/Library/Application\ Support/Google ~/goinfre/ln/"
+	[ -d "/goinfre/$(whoami)/ln/.vscode" ] && mv /Users/$(whoami)/.vscode ~/goinfre/ln/
+	[ -d "/goinfre/$(whoami)/ln/Caches" ] && mv /Users/$(whoami)/Library/Caches ~/goinfre/ln/
+	[ -d "/goinfre/$(whoami)/ln/Code" ] && mv /Users/$(whoami)/Library/Application\ Support/Code ~/goinfre/ln/
+	[ -d "/goinfre/$(whoami)/ln/Google" ] && mv /Users/$(whoami)/Library/Application\ Support/Google ~/goinfre/ln/
 }
 
 function linkApps()
 {
-	ln -s "~/goinfre/ln/.vscode" "/Users/$(whoami)/.vscode"
-	ln -s "~/goinfre/ln/Caches" "/Users/$(whoami)/Library/Caches"
-	ln -s "~/goinfre/ln/Code" "/Users/$(whoami)/Library/Application\ Support/Code"
-	ln -s "~/goinfre/ln/Google" "/Users/$(whoami)/Library/Application\ Support/Google"
+	ln -s ~/goinfre/ln/.vscode /Users/$(whoami)/.vscode
+	ln -s ~/goinfre/ln/Caches /Users/$(whoami)/Library/Caches
+	ln -s ~/goinfre/ln/Code /Users/$(whoami)/Library/Application\ Support/Code
+	ln -s ~/goinfre/ln/Google /Users/$(whoami)/Library/Application\ Support/Google
 }
 
 function installBrew()
